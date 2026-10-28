@@ -15,7 +15,7 @@ function cargarSeed() {
 }
 
 const obtenerTodos= (req, res) => {
-  return Array.from(alumnos.values());
+  res.status(200).json(Array.from(alumnos.values())); //entender
 };
 
 app.get("/api/alumnos", obtenerTodos);
