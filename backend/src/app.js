@@ -18,21 +18,21 @@ const obtenerTodos= (req, res) => {
   return Array.from(alumnos.values());
 };
 
-app.get("/alumnos", obtenerTodos);
+app.get("/api/alumnos", obtenerTodos);
 
-app.get("/alumnos/:dni", (req, res) => {
+app.get("/api/alumnos/:dni", (req, res) => {
   res.status(200).json([]);
 });
 
-app.post("/alumnos", (req, res) => {
+app.post("/api/alumnos", (req, res) => {
   res.status(200).json([]);
 });
 
-app.put("/alumnos/:dni", (req, res) => {
+app.put("/api/alumnos/:dni", (req, res) => {
   res.status(200).json([]);
 });
 
-app.delete("/alumnos/:dni", (req, res) => {
+app.delete("/api/alumnos/:dni", (req, res) => {
   res.status(200).json([]);
 });
 

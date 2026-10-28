@@ -14,21 +14,21 @@ email (string), email del alumno.
 
 Endpoints:
 
-GET /alumnos
+GET /api/alumnos
 Este endpoint va a servir para obtenerr la lista de alumnos registrados.
 
 Status codes:
 200 OK: La lista de alumnos se obtiene correctamente.
 500 Internal Server Error: Se produce un error interno al intentar obtener la lista de alumnos.
 
-GET /alumnos/:dni
+GET /api/alumnos/:dni
 Obtener un alumno especifico a partir de su dni.
 
 Status codes:
 200 OK: El alumno se encuentra y sus datos se devuelven correctamente.
 404 Not Found: No existe un alumno registrado con el DNI indicado.
 
-POST /alumnos
+POST /api/alumnos
 Registra un nuevo alumno al sistema.
 
 Body esperado:
@@ -50,7 +50,7 @@ Status codes:
 400 Bad Request: Los datos enviados no cumplen con el formato esperado.
 409 Conflict: Ya existe un alumno registrado con el DNI indicado.
 
-PUT /alumnos/:dni 
+PUT /api/alumnos/:dni 
 Modifica los datos de un alumno especifico a partir de su dni.
 
 Body esperado:
@@ -72,7 +72,7 @@ Status codes:
 400 Bad Request: Los datos enviados no cumplen con el formato esperado.
 404 Not Found: No existe un alumno registrado con el DNI indicado.
 
-DELETE /alumnos/:dni 
+DELETE /api/alumnos/:dni 
 Elimina un alumno especifico a partir de su dni.
 
 Status codes:
