@@ -4,8 +4,8 @@ const alumnos = new Map();
 
 function cargarSeed() {
   alumnos.clear();
-  for (const alumno of alumnosSeed) {
-    alumnos.set(alumno.dni, { ...alumno });
+  for (const alumno of alumnosSeed) { //recorro array 
+    alumnos.set(alumno.dni, { ...alumno }); //voy agregando
   }
 }
 
@@ -17,6 +17,16 @@ function devolverAlumno(dni) {
     return alumnos.get(dni);
 }
 
+function existeDni(dni){
+  return alumnos.has(dni);
+
+}
+
+function guardarAlumno(alumno){
+  alumnos.set(alumno.dni, { ...alumno }); //agrego al array
+  return alumno;
+}
+
 cargarSeed();
-module.exports = { obtenerTodos, devolverAlumno};
+module.exports = { obtenerTodos, devolverAlumno, existeDni, guardarAlumno};
 

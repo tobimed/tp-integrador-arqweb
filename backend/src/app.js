@@ -13,12 +13,22 @@ app.get("/api/alumnos/:dni", (req, res) => {
   const alumnoDni = repo.devolverAlumno(dni);
 
   if(!alumnoDni){
-    return res.status(404).json({error: `no existe el alumno solicitado con este DNI: ${dni}`});
+    return res.status(404).json({mensaje: `no existe el alumno solicitado con este DNI: ${dni}`});
   }
   res.status(200).json(alumnoDni);
 });
 
 app.post("/api/alumnos", (req, res) => {
+  const {dni, nombre, apellido, email} = req.body;
+  if(!dni || !nombre || !apellido || !email){
+    return res.status(400).json({mensaje: `mala solicitud, faltan datos`});
+  }
+  if(repo.existeDni(dni)){
+    return res.status(409).json({mensaje: `El alumno ya existe con el DNI: ${dni}`});
+  }
+  
+  const nuevoAlumno = repo.guardarAlumno({dni, nombre, apellido, email});
+  res.status(201).json(nuevoAlumno, {mensaje: `El alumno fue guardado`});
  
 });
 
