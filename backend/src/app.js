@@ -10,7 +10,12 @@ app.get("/api/alumnos", (req, res)=> {
 
 app.get("/api/alumnos/:dni", (req, res) => {
   const dni = req.params.dni;
-  res.status(200).json(repo.devolverAlumno(dni))
+  const alumnoDni = repo.devolverAlumno(dni);
+
+  if(!alumnoDni){
+    return res.status(404).json({error: `no existe el alumno solicitado con este DNI: ${dni}`});
+  }
+  res.status(200).json(alumnoDni);
 });
 
 app.post("/api/alumnos", (req, res) => {
