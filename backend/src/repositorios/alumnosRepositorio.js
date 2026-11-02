@@ -27,6 +27,11 @@ function guardarAlumno(alumno){
   return alumno;
 }
 
+function eliminarAlumno(dni){
+  return alumnos.delete(dni);  
+}
+
+
 cargarSeed();
-module.exports = { obtenerTodos, devolverAlumno, existeDni, guardarAlumno};
+module.exports = { obtenerTodos, devolverAlumno, existeDni, guardarAlumno, eliminarAlumno};
 

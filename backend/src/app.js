@@ -33,11 +33,34 @@ app.post("/api/alumnos", (req, res) => {
 });
 
 app.put("/api/alumnos/:dni", (req, res) => {
-  
+  const dni = req.params.dni;
+  const {dni: dniNuevo, nombre, apellido, email} = req.body;
+  if(!dniNuevo || !nombre || !apellido || !email){
+    return res.status(400).json({mensaje: `mala solicitud, malos datos`});
+  }
+
+  if (dniNuevo !== dni) {
+    return res.status(400).json({ mensaje: "El DNI del body no coincide con el de la URL" });
+  }
+
+  if(!repo.existeDni){
+    return res.status(409).json({mensaje: `El alumno no existe con el DNI: ${dni}`});
+  }
+  const alumnoMod = repo.guardarAlumno({dni, nombre, apellido, email});
+  res.status(200).json({ mensaje: "El alumno fue modificado", alumno: alumnoMod });
+
 });
 
 app.delete("/api/alumnos/:dni", (req, res) => {
-  
+  const dni = req.params.dni;
+  const alumnoE = repo.eliminarAlumno(dni);
+
+  if(!alumnoE){
+    return res.status(404).json({ mensaje: "El alumno no existe", alumno: dni});
+  }
+
+  res.status(204).end();
+
 });
 
 module.exports = app;
