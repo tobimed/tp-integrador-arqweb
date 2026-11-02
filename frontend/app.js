@@ -1,11 +1,42 @@
 const tablaAlumnos = document.getElementById("tabla-alumnos"); // <tbody> donde se cargan las filas
 const mensaje = document.getElementById("mensaje"); // <p> para mostrar errores
+const formAlumno = document.getElementById("form-alumno"); // el <form>
+const mensajeForm = document.getElementById("mensaje-form"); // <p> para el resultado del alta
 
 function crearCelda(texto) {
   const celda = document.createElement("td");
   celda.textContent = texto; // textContent y no innerHTML: evita ataques XSS
   return celda;
 }
+
+formAlumno.addEventListener("submit", async (evento) => { // se ejecuta al apretar "Guardar"
+  evento.preventDefault(); // evita que el navegador recargue la página
+
+  const alumno = { // arma el objeto con lo que escribió el usuario
+    dni: document.getElementById("dni").value,
+    nombre: document.getElementById("nombre").value,
+    apellido: document.getElementById("apellido").value,
+    email: document.getElementById("email").value,
+  };
+
+  try {
+    const respuesta = await fetch("/api/alumnos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" }, // avisa que el body es JSON
+      body: JSON.stringify(alumno), // convierte el objeto a texto JSON
+    });
+
+    const datos = await respuesta.json(); // la API responde { mensaje, ... }
+    mensajeForm.textContent = datos.mensaje; // muestra el mensaje de la API (éxito, 400 o 409)
+
+    if (respuesta.ok) { // solo si se guardó
+      formAlumno.reset(); // vacía el formulario
+      cargarAlumnos(); // recarga la tabla
+    }
+  } catch (error) {
+    mensajeForm.textContent = "No se pudo conectar con el servidor";
+  }
+});
 
 async function cargarAlumnos() { // async para poder usar await adentro
   try {
@@ -25,9 +56,36 @@ async function cargarAlumnos() { // async para poder usar await adentro
       fila.appendChild(crearCelda(alumno.nombre));
       fila.appendChild(crearCelda(alumno.apellido));
       fila.appendChild(crearCelda(alumno.email));
+      const celdaAcciones = document.createElement("td"); // celda para los botones
+      const botonEliminar = document.createElement("button"); // crea un <button>
+      botonEliminar.textContent = "Eliminar";
+      botonEliminar.addEventListener("click", () => eliminarAlumno(alumno.dni)); // al clickear, elimina ESTE alumno
+      celdaAcciones.appendChild(botonEliminar);
+      fila.appendChild(celdaAcciones);
       tablaAlumnos.appendChild(fila); // recién acá la fila aparece en pantalla
     }
   } catch (error) { // fetch falla si no hay respuesta: servidor caído o sin conexión
+    mensaje.textContent = "No se pudo conectar con el servidor";
+  }
+}
+
+async function eliminarAlumno(dni) {
+  if (!confirm(`¿Eliminar al alumno con DNI ${dni}?`)) { // ventana de confirmación del navegador
+    return; // si apretó "Cancelar", no hace nada
+  }
+
+  try {
+    const respuesta = await fetch(`/api/alumnos/${dni}`, { method: "DELETE" }); // el DNI va en la URL
+
+    if (respuesta.status === 204) { // se eliminó: el 204 no tiene body, así que no se lee con .json()
+      mensaje.textContent = `Alumno ${dni} eliminado`;
+      cargarAlumnos(); // recarga la tabla sin ese alumno
+      return;
+    }
+
+    const datos = await respuesta.json(); // 404: tu API manda { mensaje }
+    mensaje.textContent = datos.mensaje;
+  } catch (error) {
     mensaje.textContent = "No se pudo conectar con el servidor";
   }
 }

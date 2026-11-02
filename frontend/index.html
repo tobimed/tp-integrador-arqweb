@@ -1,39 +1,59 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión de Alumnos</title>
-  <link rel="stylesheet" href="styles.css">
+<!DOCTYPE html> <!-- indica que es HTML5 -->
+<html lang="es"> <!-- idioma de la página: ayuda a lectores de pantalla y traductores -->
+<head> <!-- información de la página, no se ve en pantalla -->
+  <meta charset="UTF-8"> <!-- codificación: para que se vean bien las tildes y la ñ -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- se adapta al ancho del celular -->
+  <title>Gestión de Alumnos</title> <!-- texto de la pestaña del navegador -->
+  <link rel="stylesheet" href="styles.css"> <!-- carga los estilos -->
 </head>
-<body>
-  <header>
-    <h1>Gestión de Alumnos</h1>
-    <nav>
+<body> <!-- todo lo que se ve en pantalla -->
+  <header> <!-- encabezado de la página -->
+    <h1>Gestión de Alumnos</h1> <!-- título principal (uno solo por página) -->
+    <nav> <!-- menú de navegación -->
       <a href="index.html">Alumnos</a>
-      <a href="reporte.html">Reporte</a>
+      <a href="reporte.html">Reporte</a> <!-- página que todavía no existe -->
     </nav>
   </header>
 
-  <main>
-    <section>
-      <h2>Listado</h2>
-      <p id="mensaje"></p>
+  <main> <!-- contenido principal -->
+    <section> <!-- sección del formulario de alta -->
+  <h2>Nuevo alumno</h2> <!-- título de la sección -->
+  <form id="form-alumno"> <!-- formulario; el id sirve para escucharlo desde app.js -->
+    <label for="dni">DNI</label> <!-- "for" lo conecta con el input de id="dni" -->
+    <input type="text" id="dni" name="dni" required> <!-- required: no deja enviar el form vacío -->
 
-      <table>
-        <thead>
-          <tr>
-            <th>DNI</th>
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label for="apellido">Apellido</label>
+    <input type="text" id="apellido" name="apellido" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required> <!-- type="email": el navegador chequea el formato -->
+    <th>Acciones</th> <!-- columna para los botones de cada fila -->
+    <button type="submit">Guardar</button> <!-- submit: al clickear, dispara el evento "submit" del form -->
+  </form>
+  <p id="mensaje-form"></p> <!-- acá app.js muestra si se guardó o el error de la API -->
+</section>
+
+    <section> <!-- listado de alumnos -->
+      <h2>Listado</h2>
+      <p id="mensaje"></p> <!-- errores al cargar la lista -->
+
+      <table> <!-- tabla de datos -->
+        <thead> <!-- fila de títulos -->
+          <tr> <!-- fila -->
+            <th>DNI</th> <!-- celda de título -->
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
           </tr>
         </thead>
-        <tbody id="tabla-alumnos"></tbody>
+        <tbody id="tabla-alumnos"></tbody> <!-- vacío: lo llena app.js con los alumnos -->
       </table>
     </section>
   </main>
 
-  <script src="app.js"></script>
+  <script src="app.js"></script> <!-- al final: cuando se ejecuta, el HTML ya está cargado -->
 </body>
 </html>
