@@ -28,7 +28,7 @@ app.post("/api/alumnos", (req, res) => {
   }
   
   const nuevoAlumno = repo.guardarAlumno({dni, nombre, apellido, email});
-  res.status(201).json(nuevoAlumno, {mensaje: `El alumno fue guardado`});
+  res.status(201).json({ mensaje: "El alumno fue guardado", alumno: nuevoAlumno });
  
 });
 
