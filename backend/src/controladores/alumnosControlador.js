@@ -59,4 +59,5 @@ function eliminar(req, res) {
 
 };
 
-module.exports = { listar, obtener, crear, modificar, eliminar };
+
+module.exports = { listar, obtener, crear, modificar, eliminar};

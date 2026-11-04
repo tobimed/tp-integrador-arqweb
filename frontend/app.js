@@ -30,7 +30,7 @@ async function cargarAlumnos() { // async para poder usar await adentro
       fila.appendChild(crearCelda(alumno.nombre));
       fila.appendChild(crearCelda(alumno.apellido));
       fila.appendChild(crearCelda(alumno.email));
-      const celdaAcciones = document.createElement("td"); // celda para los botones
+      const celdaAcciones = document.createElement("td"); // celda para los botones (como)
       const botonEditar = document.createElement("button");
       botonEditar.textContent = "Editar";
       botonEditar.addEventListener("click", () => editarAlumno(alumno));

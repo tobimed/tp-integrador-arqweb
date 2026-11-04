@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Alumnos</title>
+  <link rel="stylesheet" href="styles.css"> <!-- los mismos estilos que index.html -->
+</head>
+<body>
+  <header> <!-- mismo encabezado y menú que index.html -->
+    <h1>Gestión de Alumnos</h1>
+    <nav>
+      <a href="index.html">Alumnos</a>
+      <a href="reporte.html">Reporte</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Reporte de alumnos</h2>
+      <p id="mensaje"></p> <!-- errores al cargar el reporte -->
+      <p>Total de alumnos: <strong id="total">-</strong></p> <!-- "-" hasta que llegan los datos -->
+
+      <table>
+        <thead>
+          <tr>
+            <th>Dominio de email</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-dominios"></tbody> <!-- lo llena reporte.js -->
+      </table>
+    </section>
+  </main>
+
+  <script src="reportes.js"></script> <!-- su propio JS, no app.js -->
+</body>
+</html>
