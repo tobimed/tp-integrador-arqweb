@@ -2,41 +2,15 @@ const tablaAlumnos = document.getElementById("tabla-alumnos"); // <tbody> donde 
 const mensaje = document.getElementById("mensaje"); // <p> para mostrar errores
 const formAlumno = document.getElementById("form-alumno"); // el <form>
 const mensajeForm = document.getElementById("mensaje-form"); // <p> para el resultado del alta
+const tituloForm = document.getElementById("titulo-form"); // <h2> del formulario: cambia según el modo
+const botonCancelar = document.getElementById("cancelar-edicion"); // botón oculto del paso 1
+let dniEditando = null; // null = modo alta; con un DNI = editando ese alumno
 
 function crearCelda(texto) {
   const celda = document.createElement("td");
   celda.textContent = texto; // textContent y no innerHTML: evita ataques XSS
   return celda;
 }
-
-formAlumno.addEventListener("submit", async (evento) => { // se ejecuta al apretar "Guardar"
-  evento.preventDefault(); // evita que el navegador recargue la página
-
-  const alumno = { // arma el objeto con lo que escribió el usuario
-    dni: document.getElementById("dni").value,
-    nombre: document.getElementById("nombre").value,
-    apellido: document.getElementById("apellido").value,
-    email: document.getElementById("email").value,
-  };
-
-  try {
-    const respuesta = await fetch("/api/alumnos", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" }, // avisa que el body es JSON
-      body: JSON.stringify(alumno), // convierte el objeto a texto JSON
-    });
-
-    const datos = await respuesta.json(); // la API responde { mensaje, ... }
-    mensajeForm.textContent = datos.mensaje; // muestra el mensaje de la API (éxito, 400 o 409)
-
-    if (respuesta.ok) { // solo si se guardó
-      formAlumno.reset(); // vacía el formulario
-      cargarAlumnos(); // recarga la tabla
-    }
-  } catch (error) {
-    mensajeForm.textContent = "No se pudo conectar con el servidor";
-  }
-});
 
 async function cargarAlumnos() { // async para poder usar await adentro
   try {
@@ -57,6 +31,10 @@ async function cargarAlumnos() { // async para poder usar await adentro
       fila.appendChild(crearCelda(alumno.apellido));
       fila.appendChild(crearCelda(alumno.email));
       const celdaAcciones = document.createElement("td"); // celda para los botones
+      const botonEditar = document.createElement("button");
+      botonEditar.textContent = "Editar";
+      botonEditar.addEventListener("click", () => editarAlumno(alumno));
+      celdaAcciones.appendChild(botonEditar);
       const botonEliminar = document.createElement("button"); // crea un <button>
       botonEliminar.textContent = "Eliminar";
       botonEliminar.addEventListener("click", () => eliminarAlumno(alumno.dni)); // al clickear, elimina ESTE alumno
@@ -68,6 +46,37 @@ async function cargarAlumnos() { // async para poder usar await adentro
     mensaje.textContent = "No se pudo conectar con el servidor";
   }
 }
+
+formAlumno.addEventListener("submit", async (evento) => { // se ejecuta al apretar "Guardar"
+  evento.preventDefault(); // evita que el navegador recargue la página
+
+  const alumno = { // arma el objeto con lo que escribió el usuario
+    dni: document.getElementById("dni").value,
+    nombre: document.getElementById("nombre").value,
+    apellido: document.getElementById("apellido").value,
+    email: document.getElementById("email").value,
+  };
+
+  try {
+    const url = dniEditando ? `/api/alumnos/${dniEditando}` : "/api/alumnos"; // PUT lleva el DNI en la URL
+    const metodo = dniEditando ? "PUT" : "POST"; // editando → PUT; si no → POST
+    const respuesta = await fetch(url, {
+      method: metodo,
+      headers: { "Content-Type": "application/json" }, // avisa que el body es JSON
+      body: JSON.stringify(alumno), // convierte el objeto a texto JSON
+    });
+
+    const datos = await respuesta.json(); // la API responde { mensaje, ... }
+    mensajeForm.textContent = datos.mensaje; // muestra el mensaje de la API (éxito, 400 o 409)
+
+    if (respuesta.ok) { // solo si se guardó
+      salirEdicion();
+      cargarAlumnos(); // recarga la tabla
+    }
+  } catch (error) {
+    mensajeForm.textContent = "No se pudo conectar con el servidor";
+  }
+});
 
 async function eliminarAlumno(dni) {
   if (!confirm(`¿Eliminar al alumno con DNI ${dni}?`)) { // ventana de confirmación del navegador
@@ -86,8 +95,30 @@ async function eliminarAlumno(dni) {
     const datos = await respuesta.json(); // 404: tu API manda { mensaje }
     mensaje.textContent = datos.mensaje;
   } catch (error) {
+    console.error(error);
     mensaje.textContent = "No se pudo conectar con el servidor";
   }
 }
+
+function editarAlumno(alumno){
+  dniEditando = alumno.dni;
+  document.getElementById("dni").value = alumno.dni;
+  document.getElementById("nombre").value = alumno.nombre;
+  document.getElementById("apellido").value = alumno.apellido;
+  document.getElementById("email").value = alumno.email;
+  document.getElementById("dni").readOnly = true; // el DNI no se puede cambiar (el backend daría 400)
+  tituloForm.textContent = `Editar alumno ${alumno.dni}`;
+  botonCancelar.hidden = false;
+  mensajeForm.textContent = ""; // borra mensajes viejos
+}
+
+function salirEdicion(){
+  dniEditando = null;
+  formAlumno.reset();
+  document.getElementById("dni").readOnly = false; //puedo vovler a escribir dni
+  tituloForm.textContent = "Nuevo Alumno";
+  botonCancelar.hidden = true;
+}
+botonCancelar.addEventListener("click", salirEdicion); // al apretar "Cancelar edición"botonCancelar.addEventListener("click", salirDeEdicion); // al apretar "Cancelar edición"
 
 cargarAlumnos(); // se ejecuta al abrir la página
