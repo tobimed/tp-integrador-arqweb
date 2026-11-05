@@ -100,7 +100,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n\t\"dni\": \"2\",\n    \"nombre\": \"Dylan\", \n    \"apellido\": \"R\", \n    \"email\": \"DR@gmail.com\"\n}",
+          "raw": "{\n\t\"dni\": \"8\",\n    \"nombre\": \"Dylan\", \n    \"apellido\": \"R\", \n    \"email\": \"DR@gmail.com\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -277,7 +277,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/api/alumnos/2",
+          "raw": "http://localhost:3000/api/alumnos/8",
           "protocol": "http",
           "host": [
             "localhost"
@@ -286,7 +286,7 @@
           "path": [
             "api",
             "alumnos",
-            "2"
+            "8"
           ]
         }
       },
@@ -319,7 +319,17 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "http://localhost:3000/api/reportes/alumnos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "reportes",
+            "alumnos"
+          ]
         }
       },
       "response": []
