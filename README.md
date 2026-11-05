@@ -108,8 +108,6 @@ Los errores responden con un objeto con un mensaje:
 { "mensaje": "no existe el alumno solicitado con este DNI: 11111111" }
 ```
 
-Cualquier endpoint puede responder **500 Internal Server Error** si ocurre un error inesperado en el servidor.
-
 ### Resumen de endpoints
 
 | Método | Ruta | Descripción | Status codes |
