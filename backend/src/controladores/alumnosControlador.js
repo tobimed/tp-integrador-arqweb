@@ -36,7 +36,7 @@ function modificar(req, res) {
   }
 
   if (dniNuevo !== dni) {
-    return res.status(400).json({ mensaje: "El DNI del body no coincide con el de la URL" });
+    return res.status(400).json({ mensaje: "El DNI no puede ser modificado" });
   }
 
   if(!repo.existeDni(dni)){

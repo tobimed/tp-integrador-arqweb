@@ -7,7 +7,7 @@ const reportesRutas = require("./rutas/reportesRutas");
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../../frontend"))); //middleware se fija si la URL coincide con un archivo
+app.use(express.static(path.join(__dirname, "../../frontend"))); //se fija si la URL coincide con un archivo
 app.use("/api/alumnos", alumnosRutas);
 app.use("/api/reportes", reportesRutas);
 
