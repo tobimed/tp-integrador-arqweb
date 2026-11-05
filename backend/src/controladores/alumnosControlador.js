@@ -52,7 +52,7 @@ function eliminar(req, res) {
   const alumnoE = repo.eliminarAlumno(dni);
 
   if(!alumnoE){
-    return res.status(404).json({ mensaje: "El alumno no existe", alumno: dni});
+    return res.status(404).json({ mensaje: `No existe un alumno con el DNI: ${dni}`});
   }
 
   res.status(204).end();
