@@ -10,7 +10,7 @@ El backend consiste en una API para la gestión de alumnos. Su objetivo es permi
 
   - Node.js y Express 5 (backend)
   - HTML, CSS y JavaScript.
-  - Postman (testin de endpoints)
+  - Postman (testing de endpoints)
 
 ## Requisitos
 
@@ -19,9 +19,9 @@ El backend consiste en una API para la gestión de alumnos. Su objetivo es permi
 
 ## Instalación
 
-1) Descomprimir el proyecto o clonarlo con "git clone https://github.com/tobimed/tp-integrador-arqweb.git".
+1) Descomprimir el proyecto o clonarlo con `git clone https://github.com/tobimed/tp-integrador-arqweb.git`.
 
-2) Entrar a la carpeta del backend e instalar las dependencias  en la bash:
+2) Entrar a la carpeta del backend e instalar las dependencias en la terminal:
 ```bash
 cd backend
 npm install
