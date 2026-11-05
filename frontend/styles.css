@@ -1,0 +1,97 @@
+
+:root {
+  --color-principal: #2f51be;  /* encabezado y los botones */
+  --color-borde: #d5dbe1;      /* bordes */
+}
+
+
+* {
+  box-sizing: border-box; /* el ancho incluye padding y borde: evita que las cosas se desborden */
+}
+
+body {
+  margin: 0; /* saca el margen que el navegador pone por defecto */
+  font-family: system-ui, Arial, sans-serif; /* la letra del sistema operativo; si no, Arial */
+  background-color:#4a939c ;
+  color: #000149;
+  line-height: 1.5; /* más espacio entre líneas: se lee mejor */
+}
+
+/* ===== Encabezado y menú ===== */
+header {
+  background-color: var(--color-principal);
+  padding: 16px 24px; /* espacio interno: 16px arriba y abajo, 24px a los costados */
+  display: flex; /* pone el título y el menú en una misma fila */
+  justify-content: space-between; /* título a la izquierda, menú a la derecha */
+  align-items: center; /* los centra verticalmente */
+  flex-wrap: wrap; /* si no entran (celular), el menú baja a otra línea */
+  gap: 8px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem; /* rem = relativo al tamaño de letra base del navegador */
+}
+
+nav {
+    display: flex;
+    gap: 16px; /* espacio entre los links */
+}
+
+nav a {
+  color: #000000;
+  text-decoration: none; /* saca el subrayado */
+  font-weight: 600; /* semi negrita */
+}
+
+nav a:hover {
+  text-decoration: underline; /* subraya al pasar el mouse */
+}
+
+/* ===== Contenido principal ===== */
+main {
+  max-width: 960px; /* no se estira más de 960px en pantallas grandes */
+  margin: 24px auto; /* auto a los costados: centra el contenido */
+  padding: 0 16px; /* margen a los costados en pantallas chicas */
+  display: grid;
+  gap: 24px; /* espacio entre las secciones */
+}
+
+section {
+  border: 1px solid #000000;
+  border-radius: 8px; /* esquinas redondeadas */
+  padding: 20px;
+}
+
+h2 {
+  margin-top: 0; /* el título queda pegado arriba de la sección */
+}
+
+#botonG{
+    margin-top: 16px;
+    padding: 6px 16px;      /* espacio interno: que el texto no quede pegado al borde */
+    border: none;           /* saca el borde gris por defecto */
+    border-radius: 6px;     /* curva fija, igual en todos los botones */
+    background-color: #000000; 
+    color: white;
+    cursor: pointer;        /* manito al pasar el mouse */
+    
+}
+
+#cancelar-edicion{
+    margin-top: 16px;
+    padding: 6px 16px;      /* espacio interno: que el texto no quede pegado al borde */
+    border: none;           /* saca el borde gris por defecto */
+    border-radius: 6px;     /* curva fija, igual en todos los botones */
+    background-color: #000000; 
+    color: white;
+    cursor: pointer;        /* manito al pasar el mouse */
+    
+}
+
+
+#form-alumno {
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}

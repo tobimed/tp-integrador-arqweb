@@ -1,3 +1,17 @@
+/*
+ * Este script maneja el alta, baja y modificación de alumnos consumiendo la API REST
+ * del backend con fetch. Al abrir la página se registran los eventos y se carga la
+ * tabla con GET /api/alumnos; cada fila tiene un botón Editar y uno Eliminar que
+ * recuerdan el alumno de su fila. El formulario se usa para dar de alta y para
+ * modificar: la variable dniEditando indica el modo. Si vale null, Guardar hace un
+ * POST a /api/alumnos; si tiene un DNI, los campos se cargan con los datos de ese
+ * alumno, el DNI queda bloqueado por ser su identificador, y Guardar hace un PUT a
+ * /api/alumnos/:dni. El botón Eliminar pide confirmación y hace un DELETE. Los
+ * mensajes de éxito y error los define el backend y se muestran en la página; si el
+ * servidor no responde, se muestra un mensaje propio y el detalle queda en la
+ * consola. Los datos se insertan con textContent y no con innerHTML para evitar XSS.
+ */
+
 const tablaAlumnos = document.getElementById("tabla-alumnos"); // <tbody> donde se cargan las filas
 const mensaje = document.getElementById("mensaje"); // <p> para mostrar errores
 const formAlumno = document.getElementById("form-alumno"); // el <form>
